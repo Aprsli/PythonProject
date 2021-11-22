@@ -26,8 +26,6 @@ $\therefore w=(x^T x)^{-1} x^T y$
 
 已知$sigmoid = \frac{1}{1 + e^{-x}}$，求导数
 
-$$
-sigmoid'=\left( \frac{e^x}{1+e^x} \right)'
-        =\frac{e^x}{1 + e^x}(1 - \frac{e^x}{1 + e^x})
-        =sigmod(1 - sigmoid)
-$$
+$sigmoid'=\left( \frac{e^x}{1+e^x} \right)'
+=\frac{e^x}{1 + e^x}(1 - \frac{e^x}{1 + e^x})
+=sigmod(1 - sigmoid)$
