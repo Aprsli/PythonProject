@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def get_fixed_windows(image_size, wind_size, overlap_size):
     '''
     This function can generate overlapped windows given various image size
@@ -34,3 +37,4 @@ def get_fixed_windows(image_size, wind_size, overlap_size):
     return list(rects)
 
 temp = get_fixed_windows((800, 700), (300, 200), (200, 100))
+df = pd.DataFrame(data=temp, columns=["left", "upper", "right", "lower"])
