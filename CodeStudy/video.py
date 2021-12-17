@@ -1,5 +1,4 @@
 import cv2
-import torch
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
@@ -15,5 +14,3 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
-
-torch.arange(100).reshape(2, 50).reshape()
