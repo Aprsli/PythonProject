@@ -64,6 +64,3 @@ def main():  # note:进程池必须位于__main__ 主进程中，必须可以被
 if __name__ == "__main__":
     htmls = asyncio.run(getBook(url))
     main()
-    # with ProcessPoolExecutor() as future:
-    #     for html, name in htmls:
-    #         future.submit(saveFile, html=html, name=name, dir="./download")
