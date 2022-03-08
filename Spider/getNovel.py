@@ -20,7 +20,7 @@ from lxml import etree
 def saveFile(html, name, dir):
     text = getContent(html)
     path = Path(dir).joinpath(name + ".txt")
-    path.write_text('\n'.join((name, text)), encoding="gbk", errors="ignore")
+    path.write_text("\n".join((name, text)), encoding="gbk", errors="ignore")
 
 
 # 解析html，提取小说内容
@@ -38,35 +38,29 @@ def getCatalogue(url):
         tree = etree.HTML(resp.text)
         href = tree.xpath('//*[@id="list"]/dl/dd[position() >= 13]/a/@href')
         title = tree.xpath('//*[@id="list"]/dl/dd[position() >= 13]/a/text()')
-    pags = list(zip(href, title))
-    random.shuffle(pags)
+        pags = list(zip(href, title))
+        random.shuffle(pags)
     return zip(*pags)
 
 
 # 异步，获取章节页面
-async def getChapter(link, referer):
-    connector = aiohttp.TCPConnector(limit=30)  # 限制并发数量，使用aiohttp参数而不是asyncio.SemaPhore
-    timeout = aiohttp.ClientTimeout(total=20)  # 程序应在total秒内完成，否则报超时错误
+async def getChapter(link, referer, session):
     header = {"user-agent": fake.chrome(), "referer": referer}
-    async with ClientSession(connector=connector, timeout=timeout) as session:
-        # await asyncio.sleep(1)
-        async with session.get(link, headers=header) as resp:
-            return await resp.read()
-    # return html该位置返回值耗时最长
+    async with session.get(link, headers=header, timeout=60) as resp:  # with中的__exit__()会在return后执行
+        return await resp.read()
 
 
 # 多阶段运行异步协程
-async def getBook(url, href, num, offset):
-    href = href[:num]
-    for i in range(0, num, offset):
+async def getBook(url, href):
+    connector = aiohttp.TCPConnector(limit=100)  # 限制并发数量，使用aiohttp参数而不是asyncio.SemaPhore
+    timeout = aiohttp.ClientTimeout(total=600)  # 程序应在total秒内完成，否则报超时错误
+    async with ClientSession(connector=connector, timeout=timeout) as session:  # 一个client下的多个连接池
         began = time.time()
-        tasks = (getChapter(url + id, book) for id in href[i: i + offset])
-        chapters = await asyncio.gather(*tasks)  # note:不能塞入全部协程，否则服务器会拒绝访问，用循环划分
+        tasks = (getChapter(url + id, book, session) for id in href)
+        chapters = await asyncio.gather(*tasks)
         over = time.time()
-        count = min(num - i, offset)
-        print(f"获取{count}个页面耗时{over - began}秒")
-        htmls.extend(chapters)
-        time.sleep(0.5)
+    print(f"获取页面耗时{(over - began): .2f}秒")
+    return chapters
 
 
 # 多进程处理文本
@@ -80,7 +74,8 @@ if __name__ == "__main__":
     fake = Faker()  # 伪造user-agent
     book = f"https://www.xbiquge.so/book/4/"
     href, title = map(list, getCatalogue(book))
-    htmls = list()  # 保存网页
 
-    asyncio.run(getBook(book, href, len(href), 200))
+    htmls = asyncio.run(getBook(book, href))
+    began = time.time()
     main(zip(htmls, title), "./novel")
+    print(f'处理并写入文本耗时{(time.time() - began): .2f}秒')
