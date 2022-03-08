@@ -1,7 +1,6 @@
 import asyncio
 import random
 import time
-from turtle import title
 
 import aiohttp
 import nest_asyncio
@@ -50,7 +49,7 @@ async def getChapter(link, referer):
     timeout = aiohttp.ClientTimeout(total=20)  # 程序应在total秒内完成，否则报超时错误
     header = {"user-agent": fake.chrome(), "referer": referer}
     async with ClientSession(connector=connector, timeout=timeout) as session:
-        await asyncio.sleep(1)
+        # await asyncio.sleep(1)
         async with session.get(link, headers=header) as resp:
             return await resp.read()
     # return html该位置返回值耗时最长
@@ -61,11 +60,11 @@ async def getBook(url, href, num, offset):
     href = href[:num]
     for i in range(0, num, offset):
         began = time.time()
-        tasks = (getChapter(url + id, book) for id in href[i : i + offset])
+        tasks = (getChapter(url + id, book) for id in href[i: i + offset])
         chapters = await asyncio.gather(*tasks)  # note:不能塞入全部协程，否则服务器会拒绝访问，用循环划分
         over = time.time()
         count = min(num - i, offset)
-        print(f"获取{count}个页面耗时{over-began}秒")
+        print(f"获取{count}个页面耗时{over - began}秒")
         htmls.extend(chapters)
         time.sleep(0.5)
 
@@ -79,9 +78,9 @@ def main(data, dir):  # note:进程池必须位于__main__ 主进程中，必须
 
 if __name__ == "__main__":
     fake = Faker()  # 伪造user-agent
-    book = f"https://www.xbiquge.so/book/4772/"
+    book = f"https://www.xbiquge.so/book/4/"
     href, title = map(list, getCatalogue(book))
     htmls = list()  # 保存网页
 
     asyncio.run(getBook(book, href, len(href), 200))
-    main(zip(htmls, title), "./download")
+    main(zip(htmls, title), "./novel")
