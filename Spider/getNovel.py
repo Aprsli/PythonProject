@@ -46,18 +46,18 @@ def getCatalogue(url):
 # 异步，获取章节页面
 async def getChapter(link, referer, session):
     header = {"user-agent": fake.chrome(), "referer": referer}
-    async with session.get(link, headers=header, timeout=60) as resp:  # with中的__exit__()会在return后执行
-        return await resp.read()
+    async with session.get(link, headers=header, timeout=60) as resp:
+        return await resp.read()  # with中的__exit__()会在return后执行
 
 
 # 多阶段运行异步协程
 async def getBook(url, href):
     connector = aiohttp.TCPConnector(limit=100)  # 限制并发数量，使用aiohttp参数而不是asyncio.SemaPhore
-    timeout = aiohttp.ClientTimeout(total=600)  # 程序应在total秒内完成，否则报超时错误
+    timeout = aiohttp.ClientTimeout(total=600)  # 程序应在total秒内完成，否则报超时错误，get方法中覆盖全局设置
     async with ClientSession(connector=connector, timeout=timeout) as session:  # 一个client下的多个连接池
         began = time.time()
         tasks = (getChapter(url + id, book, session) for id in href)
-        chapters = await asyncio.gather(*tasks)
+        chapters = await asyncio.gather(*tasks)  # 若想是实现几秒后发起下一轮请求，可插入sleep函数
         over = time.time()
     print(f"获取页面耗时{(over - began): .2f}秒")
     return chapters
