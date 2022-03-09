@@ -17,9 +17,9 @@ from lxml import etree
 
 
 # 写入txt文本
-def saveFile(html, name, dir):
+def saveFile(html, name, dir: Path):
     text = getContent(html)
-    path = Path(dir).joinpath(name + ".txt")
+    path = dir.joinpath(name + ".txt")
     path.write_text("\n".join((name, text)), encoding="gbk", errors="ignore")
 
 
@@ -72,10 +72,12 @@ def main(data, dir):  # note:进程池必须位于__main__ 主进程中，必须
 
 if __name__ == "__main__":
     fake = Faker()  # 伪造user-agent
-    book = f"https://www.xbiquge.so/book/4/"
+    book = f"https://www.xbiquge.so/book/53099/"
     href, title = map(list, getCatalogue(book))
+    dir = Path('./download/text/万象之王')
+    dir.mkdir(exist_ok=True)
 
     htmls = asyncio.run(getBook(book, href))
     began = time.time()
-    main(zip(htmls, title), "./novel")
+    main(zip(htmls, title), dir)
     print(f'处理并写入文本耗时{(time.time() - began): .2f}秒')
