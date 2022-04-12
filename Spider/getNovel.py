@@ -26,7 +26,7 @@ def saveFile(html, name, dir: Path):
 # 解析html，提取小说内容
 def getContent(html):
     root = BeautifulSoup(html, "lxml")
-    text = root.find("div", id="content").get_text("\n")
+    text = root.find("div", id="content").get_text("\n", strip=True)
     return text.replace("&nbsp;", "")
 
 

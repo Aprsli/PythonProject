@@ -1,0 +1,26 @@
+1647233987152	geckodriver	INFO	Listening on 127.0.0.1:61052
+1647233990190	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\jhZou\\AppData\\Local\\Temp\\rust_mozprofileID4Cp7"
+1647233990496	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jhZou\\AppData\\Local\\Temp\\rust_mozprofileID4Cp7\\search.json.mozlz4", (void 0)))
+1647233992442	Marionette	INFO	Listening on port 61060
+1647233992852	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://dlswbr.baidu.com/heicha/mw/abclite-2033-s.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://dlswbr.baidu.com/heicha/mw/abclite-2033-s.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1647234006594	Marionette	INFO	Stopped listening on port 61060
+
+###!!! [Child][PContentChild] Error: RunMessage(msgname=PHttpChannel::Msg_DeleteSelf) Channel closing: too late to send/recv, messages will be lost
+
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+1647611432011	geckodriver	INFO	Listening on 127.0.0.1:54481
+1647611434714	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-no-remote" "-profile" "C:\\Users\\jhZou\\AppData\\Local\\Temp\\rust_mozprofileFRFtyp"
+1647611435344	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\jhZou\\AppData\\Local\\Temp\\rust_mozprofileFRFtyp\\search.json.mozlz4", (void 0)))
+1647611437651	Marionette	INFO	Listening on port 54490
+1647611437884	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript warning: https://dlswbr.baidu.com/heicha/mw/abclite-2033-s.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://dlswbr.baidu.com/heicha/mw/abclite-2033-s.js, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1647611452598	Marionette	INFO	Stopped listening on port 54490
+JavaScript error: chrome://remote/content/marionette/cert.js, line 55: NS_ERROR_NOT_AVAILABLE: Component returned failure code: 0x80040111 (NS_ERROR_NOT_AVAILABLE) [nsICertOverrideService.setDisableAllSecurityChecksAndLetAttackersInterceptMyData]
+[Parent 12144, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+[Parent 12144, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+[Parent 12144, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167

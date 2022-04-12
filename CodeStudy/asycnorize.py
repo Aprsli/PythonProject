@@ -14,6 +14,6 @@ async def test():
 
 if __name__ == '__main__':
     result = asyncio.run(asyncio.gather(main(), test(), test(), main()))
-    # with ProcessPoolExecutor(max_workers=4) as executor:
-    #     future = executor.submit(pow, 323, 1235)
-    #     print(future.result())
+    with ProcessPoolExecutor(max_workers=4) as executor:
+        future = executor.submit(pow, 323, 1235)
+        print(future.result())
